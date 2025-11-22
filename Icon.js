@@ -1,128 +1,102 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
+<style>
+#popupModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in;
+}
+#popupContent {
+  background: linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef, #ff9a9e);
+  margin: 15% auto;
+  padding: 20px;
+  border: none;
+  border-radius: 20px;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  font-family: Arial, sans-serif;
+  color: #333;
+  animation: bounceIn 0.5s ease-out;
+}
+#closePopup {
+  color: #ff4757;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: -10px;
+}
+#closePopup:hover {
+  color: #ff6b7a;
+}
+.popupMessage {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #2f3542;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@media (max-width: 600px) {
+  #popupContent { width: 90%; margin: 20% auto; }
+}
+</style>
 
-        .bell-container {
-            position: relative;
-            cursor: pointer;
-            font-size: 40px;
-            color: #333;
-            display: inline-block;
-            animation: ring 1s ease-in-out infinite alternate; /* Optional: বেল অ্যানিমেশন নতুন নোটিফিকেশনের জন্য */
-        }
+<div id="popupModal">
+  <div id="popupContent">
+    <span id="closePopup"><i class="fas fa-times"></i></span>
+    <div class="popupMessage">স্বাগতম আমার ব্লগে! এখানে দারুণ কনটেন্ট অপেক্ষা করছে। 😊</div>
+    <button onclick="openWhatsAppAndClose()" style="background: #25D366; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 10px;">
+      <i class="fab fa-whatsapp"></i> WhatsApp-এ যোগাযোগ করুন
+    </button>
+  </div>
+</div>
 
-        .bell {
-            display: block;
-        }
+<script>
+window.addEventListener('load', function() {
+  var lastShown = localStorage.getItem('popupLastShown');
+  var now = Date.now();
+  var twentyFourHours = 24 * 60 * 60 * 1000;
+  
+  if (!lastShown || (now - parseInt(lastShown) > twentyFourHours)) {
+    setTimeout(function() {
+      document.getElementById('popupModal').style.display = 'block';
+    }, 5000);
+    localStorage.setItem('popupLastShown', now);
+  }
+});
 
-        .red-dot {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            width: 12px;
-            height: 12px;
-            background-color: #ff0000;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            box-shadow: 0 0 3px rgba(255,0,0,0.5);
-        }
+function closePopup() {
+  document.getElementById('popupModal').style.display = 'none';
+}
 
-        .popup {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
-            animation: fadeIn 0.3s;
-        }
+function openWhatsAppAndClose() {
+  var phoneNumber = '91xxxxxxxxxx';  // আপনার ফোন নম্বর এখানে দিন (কান্ট্রি কোড সহ, যেমন 91 for India)
+  var message = 'হ্যালো! আপনার ব্লগ থেকে যোগাযোগ করছি।';
+  var whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + encodeURIComponent(message);
+  window.open(whatsappUrl, '_blank');
+  closePopup();
+}
 
-        .popup-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .close {
-            color: white;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover {
-            color: #ccc;
-        }
-
-        .icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            margin: 10px 0;
-            color: #fff;
-        }
-
-        p {
-            margin: 10px 0;
-            line-height: 1.4;
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        @keyframes slideIn {
-            from {transform: translateY(-50px); opacity: 0;}
-            to {transform: translateY(0); opacity: 1;}
-        }
-
-        @keyframes ring {
-            from { transform: rotate(-5deg); }
-            to { transform: rotate(5deg); }
-        }
-    </style>
-    <div class="bell-container" onclick="showPopup()">
-        <span class="bell">🔔</span>
-        <span class="red-dot"></span>
-    </div>
-    
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="hidePopup()">&times;</span>
-            <div class="icon">🎉</div>
-            <h2>সফলতা!</h2>
-            <p>আপনার কাজ সম্পন্ন হয়েছে। এটি একটি কালারফুল নোটিফিকেশন।</p>
-        </div>
-    </div>
-
-    <script>
-        function showPopup() {
-            document.getElementById('popup').style.display = 'block';
-            // Optional: ক্লিক করলে লাল ডট লুকিয়ে ফেলুন (unread মার্কার রিমুভ)
-            document.querySelector('.red-dot').style.display = 'none';
-        }
-        function hidePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
-    </script>
+document.getElementById('closePopup').onclick = closePopup;
+window.onclick = function(event) {
+  if (event.target == document.getElementById('popupModal')) {
+    closePopup();
+  }
+};
+</script>
