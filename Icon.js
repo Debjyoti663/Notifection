@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notification Bell with Popup for Blogger</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -107,8 +102,6 @@
             to { transform: rotate(5deg); }
         }
     </style>
-</head>
-<body>
     <div class="bell-container" onclick="showPopup()">
         <span class="bell">🔔</span>
         <span class="red-dot"></span>
@@ -133,5 +126,3 @@
             document.getElementById('popup').style.display = 'none';
         }
     </script>
-</body>
-</html>
