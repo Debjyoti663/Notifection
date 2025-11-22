@@ -59,7 +59,7 @@
 
 <div id="popupModal">
   <div id="popupContent">
-    <span id="closePopup"><i class="fas fa-times"></i></span>
+    <span id="closePopup"><i class="fab fa-whatsapp"></i></span>
     <div class="popupMessage">স্বাগতম আমার ব্লগে! এখানে দারুণ কনটেন্ট অপেক্ষা করছে। 😊</div>
     <button onclick="openWhatsAppAndClose()" style="background: #25D366; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 10px;">
       <i class="fab fa-whatsapp"></i> WhatsApp-এ যোগাযোগ করুন
